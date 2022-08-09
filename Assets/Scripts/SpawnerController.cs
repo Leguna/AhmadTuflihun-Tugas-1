@@ -66,7 +66,6 @@ public class SpawnerController : SingletonMonoBehaviour<SpawnerController>
             _waves[GameManager.Instance.CurrentWave >= _waves.Count ? 0 : GameManager.Instance.CurrentWave];
         _spawnCount = _currentWave.totalSpawn;
         _currenDelaySpawn = _delayBetweenWave;
-        print($"Wave: {_currentWave.name}");
         UIManager.Instance.UpdateWaveName(_currentWave.name);
     }
 
