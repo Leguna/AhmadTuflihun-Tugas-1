@@ -14,7 +14,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public GameObject enemies;
 
     [SerializeField] private GameObject _gameOverUI;
-     public List<ZombieController> zombieControllers;
+    [HideInInspector] public List<ZombieController> zombieControllers;
     public bool isGamePaused;
 
     public void SetGamePause(bool isPaused)

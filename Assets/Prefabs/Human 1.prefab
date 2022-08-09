@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1107533374360917378, guid: e616688df477bea4895204f61d17e3c3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8d449cf881cc1e24bbe545d080d6312e, type: 3}
     - target: {fileID: 4382661500607405448, guid: e616688df477bea4895204f61d17e3c3, type: 3}
       propertyPath: _type
       value: 2
@@ -14,6 +18,14 @@ PrefabInstance:
     - target: {fileID: 4382661500607405448, guid: e616688df477bea4895204f61d17e3c3, type: 3}
       propertyPath: _moveSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382661500607405450, guid: e616688df477bea4895204f61d17e3c3, type: 3}
+      propertyPath: m_Radius
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4382661500607405450, guid: e616688df477bea4895204f61d17e3c3, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.44
       objectReference: {fileID: 0}
     - target: {fileID: 4382661500607405557, guid: e616688df477bea4895204f61d17e3c3, type: 3}
       propertyPath: m_Name
@@ -64,8 +76,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4382661500607405559, guid: e616688df477bea4895204f61d17e3c3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7c623ee88840802418b7a70f8c9ee676, type: 3}
+    - target: {fileID: 4382661500607405559, guid: e616688df477bea4895204f61d17e3c3, type: 3}
       propertyPath: m_Color.b
-      value: 0.4288988
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4382661500607405559, guid: e616688df477bea4895204f61d17e3c3, type: 3}
       propertyPath: m_Color.g
@@ -73,7 +89,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4382661500607405559, guid: e616688df477bea4895204f61d17e3c3, type: 3}
       propertyPath: m_Color.r
-      value: 0.3537736
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6783424127299214789, guid: e616688df477bea4895204f61d17e3c3, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: cd8db27acc2bddb4099cb410cf617fbf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e616688df477bea4895204f61d17e3c3, type: 3}

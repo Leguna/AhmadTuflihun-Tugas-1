@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Map
+    uniqueID: 1496805413
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Decomap
+    uniqueID: 3713728029
     locked: 0

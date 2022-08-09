@@ -10,9 +10,14 @@ public class ZombieController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (_type == TapableType.Human) GameManager.Instance.Hit(12);
+        if (_type == TapableType.Human)
+        {
+            AudioController.Instance.PlayPlayerGetHitSound();
+            GameManager.Instance.Hit(999);
+        }
         else GameManager.Instance.AddScore();
 
+        AudioController.Instance.PlayZombieDeadSound();
         GameManager.Instance.zombieControllers.Remove(this);
         Destroy(gameObject);
     }
@@ -51,7 +56,10 @@ public class ZombieController : MonoBehaviour
     public void Finish()
     {
         if (_type == TapableType.Zombie)
+        {
+            AudioController.Instance.PlayPlayerGetHitSound();
             GameManager.Instance.Hit(1);
+        }
 
         GameManager.Instance.zombieControllers.Remove(this);
         Destroy(gameObject);
