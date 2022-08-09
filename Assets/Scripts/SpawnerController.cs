@@ -11,62 +11,92 @@ public class SpawnerController : SingletonMonoBehaviour<SpawnerController>
     [SerializeField] private List<Wave> _waves;
     [SerializeField] private List<GameObject> _zombiePrefab;
     [SerializeField] private List<GameObject> _humanPrefab;
-    private int _indexCurrentWave;
-    private Wave _currentWave;
-    private float _nextWaveTimeCountdown;
 
+    private Wave _currentWave;
+    private float _currenDelaySpawn;
+    private int _spawnCount;
     private float _timeRate;
     private int _lastHumanSpawn;
+    [SerializeField] private float _delayBetweenWave;
     [SerializeField] private Vector2Int _randomHumanSpawnTimeRateLimit = new(4, 8);
 
     private void Start()
     {
         _spawnStartPositionY = transform.position.y;
-        _currentWave = _waves[GameManager.Instance.CurrentWave];
+        NextWave();
     }
 
     private void Update()
     {
-        if (_timeRate > 0)
-            _timeRate -= Time.deltaTime;
-        else
+        if (GameManager.Instance.isGamePaused) return;
+
+        if (_currenDelaySpawn > 0)
         {
+            _currenDelaySpawn -= Time.deltaTime;
+            UIManager.Instance.UpdateTimeUI(_currenDelaySpawn);
+            return;
+        }
+
+        if (_spawnCount <= 0)
+        {
+            NextWave();
+            return;
+        }
+
+        if (_timeRate > 0)
+        {
+            _timeRate -= Time.deltaTime;
+            return;
+        }
+
+
+        if (_spawnCount > 0)
+        {
+            _spawnCount--;
+            UIManager.Instance.UpdateSpawnCountUI(_spawnCount);
             _timeRate = GetRandomTimeRate(_currentWave.timeSpawnRate.x, _currentWave.timeSpawnRate.y);
             Spawn();
         }
-
-        if (_nextWaveTimeCountdown > 0)
-            _nextWaveTimeCountdown -= Time.deltaTime;
-        else NextWave();
     }
 
     private void NextWave()
     {
+        GameManager.Instance.CurrentWave++;
+        _currentWave =
+            _waves[GameManager.Instance.CurrentWave >= _waves.Count ? 0 : GameManager.Instance.CurrentWave];
+        _spawnCount = _currentWave.totalSpawn;
+        _currenDelaySpawn = _delayBetweenWave;
+        print($"Wave: {_currentWave.name}");
+        UIManager.Instance.UpdateWaveName(_currentWave.name);
     }
 
     private void Spawn()
     {
+        GameObject spawnedObject;
         if (_lastHumanSpawn == 0)
         {
             _lastHumanSpawn = Random.Range(_randomHumanSpawnTimeRateLimit.x, _randomHumanSpawnTimeRateLimit.y);
-            Instantiate(_humanPrefab[0], GetRandomSpawnPosition(), Quaternion.identity,
+            spawnedObject = Instantiate(_humanPrefab[0], GetRandomSpawnPosition(), Quaternion.identity,
                 GameManager.Instance.spawner.transform);
         }
         else
         {
             _lastHumanSpawn--;
-            Instantiate(_zombiePrefab[0], GetRandomSpawnPosition(), Quaternion.identity,
+            spawnedObject = Instantiate(_zombiePrefab[0], GetRandomSpawnPosition(), Quaternion.identity,
                 GameManager.Instance.spawner.transform);
         }
+
+        spawnedObject.TryGetComponent(out ZombieController zombieController);
+        GameManager.Instance.zombieControllers.Add(zombieController);
     }
 
-    public float GetRandomTimeRate(float min, float max)
+    private float GetRandomTimeRate(float min, float max)
     {
         _timeRate = Random.Range(min, max);
         return _timeRate;
     }
 
-    public Vector3 GetRandomSpawnPosition()
+    private Vector3 GetRandomSpawnPosition()
     {
         return new Vector3(Random.Range(spawnLimitPositionX.x, spawnLimitPositionX.y), _spawnStartPositionY);
     }
@@ -78,6 +108,5 @@ public class Wave
     public string name;
     public Vector2 timeSpawnRate;
     public Vector2 humanTimeRate;
-    public float totalTime;
-    public float totalSpawn;
+    public int totalSpawn;
 }

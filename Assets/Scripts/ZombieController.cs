@@ -6,12 +6,14 @@ public class ZombieController : MonoBehaviour
     [SerializeField] private float _moveSpeed = 1f;
     [SerializeField] private TapableType _type = TapableType.None;
 
+    public bool isMoving = true;
+
     private void OnMouseDown()
     {
-        if (_type == TapableType.Human) GameManager.Instance.Hit(3);
+        if (_type == TapableType.Human) GameManager.Instance.Hit(12);
         else GameManager.Instance.AddScore();
 
-
+        GameManager.Instance.zombieControllers.Remove(this);
         Destroy(gameObject);
     }
 
@@ -21,10 +23,28 @@ public class ZombieController : MonoBehaviour
         StartMove();
     }
 
+    public void ToggleMove()
+    {
+        if (isMoving)
+            StopMove();
+        else
+            StartMove();
+
+        isMoving = !isMoving;
+    }
+
+    private void StopMove()
+    {
+        if (_zombieRb == null) return;
+        isMoving = false;
+        _zombieRb.velocity = Vector2.zero;
+    }
+
     private void StartMove()
     {
         if (_zombieRb == null) return;
 
+        isMoving = true;
         _zombieRb.velocity += Vector2.down * _moveSpeed;
     }
 
@@ -33,6 +53,7 @@ public class ZombieController : MonoBehaviour
         if (_type == TapableType.Zombie)
             GameManager.Instance.Hit(1);
 
+        GameManager.Instance.zombieControllers.Remove(this);
         Destroy(gameObject);
     }
 }
