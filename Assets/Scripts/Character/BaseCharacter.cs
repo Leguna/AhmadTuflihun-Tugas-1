@@ -13,8 +13,11 @@ namespace Character
 
         [SerializeField] protected Rigidbody2D _charRigidbody;
         [SerializeField] private float _moveSpeed = 1f;
+
         [SerializeField] private float _destroyYPos = -4f;
-        [SerializeField] private float _damage = 1f;
+
+        // TODO @Leguna: Uncomment this after implement hit and doing damage
+        // [SerializeField] private float _damage = 1f;
         [SerializeField] private float _health = 1f;
 
         public event OnDamaged OnDamagedEvent;
