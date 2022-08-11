@@ -6,6 +6,7 @@ namespace Character
     public class PlayerController : MonoBehaviour, IDamageable, IDoingDamage
     {
         [SerializeField] private int _health;
+        public float rayRange = 4;
 
         public delegate void OnDamageDelegate(int damage);
 
@@ -14,6 +15,17 @@ namespace Character
         public event OnDamageDelegate OnDamagedEvent;
         public event OnDestroyDelegate OnDestroyedEvent;
 
+
+        private void Update()
+        {
+            // TODO @Leguna: Ask mentor about performance, is better using Physics2DRaycaster?
+            var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit && Input.GetMouseButtonDown(0))
+            {
+                var interactedObject = hit.collider.gameObject;
+                interactedObject.GetComponent<IInteractable>().Interact();
+            }
+        }
 
         public void OnDestroyed()
         {

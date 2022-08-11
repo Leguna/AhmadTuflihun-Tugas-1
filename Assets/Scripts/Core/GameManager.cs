@@ -14,6 +14,16 @@ namespace Core
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private GameObject _gameOverUI;
         [HideInInspector] public List<BaseCharacter> characterControllers;
+        public bool isGameOver;
+        private void Start()
+        {
+            ResumeGame();
+        }
+
+        private void ResumeGame()
+        {
+            Time.timeScale = 1;
+        }
 
         private void OnEnable()
         {
@@ -52,6 +62,7 @@ namespace Core
         private void GameOver()
         {
             PauseGame();
+            isGameOver = true;
             _gameOverUI.SetActive(true);
         }
 
