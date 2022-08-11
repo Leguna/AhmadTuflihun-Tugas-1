@@ -1,12 +1,11 @@
 using Core;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Utilities;
 
 namespace Character
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public abstract class BaseCharacter : MonoBehaviour, IPointerDownHandler, IDamageable, IDoingDamage, IMovable
+    public abstract class BaseCharacter : MonoBehaviour, IInteractable, IDamageable, IDoingDamage, IMovable
     {
         public GameManager GameManager;
 
@@ -30,17 +29,6 @@ namespace Character
 
         public event OnReachedDestination OnReachedDestinationEvent;
         protected abstract void OnTap();
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            OnDamagedEvent?.Invoke(5);
-            OnDamaged(1);
-
-            OnTap();
-            GameManager.Instance.characterControllers.Remove(this);
-            OnDestroyedEvent?.Invoke();
-            Destroy(gameObject);
-        }
 
         public void OnDestroyed()
         {
@@ -82,6 +70,21 @@ namespace Character
         public void Hit(float damage)
         {
             // TODO @Leguna: Implement Hit on Player Controller
+        }
+
+        public void Interact()
+        {
+            // TODO @Leguna: Remove singleton and changes to dependency injection if project getting bigger
+            if (GameManager.Instance.isGameOver) return;
+
+            OnDamagedEvent?.Invoke(5);
+            OnDamaged(1);
+
+            OnTap();
+
+            GameManager.Instance.characterControllers.Remove(this);
+            OnDestroyedEvent?.Invoke();
+            Destroy(gameObject);
         }
     }
 }
