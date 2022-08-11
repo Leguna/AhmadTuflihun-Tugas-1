@@ -2,7 +2,6 @@ using Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utilities;
-using static Utilities.IDamageable;
 
 namespace Character
 {
@@ -18,10 +17,14 @@ namespace Character
 
         // TODO @Leguna: Uncomment this after implement hit and doing damage
         // [SerializeField] private float _damage = 1f;
-        [SerializeField] private float _health = 1f;
+        [SerializeField] private int _health = 1;
 
-        public event OnDamaged OnDamagedEvent;
-        public event OnDestroyed OnDestroyedEvent;
+        public delegate void OnDamageDelegate(int damage);
+
+        public delegate void OnDestroyDelegate();
+
+        public event OnDamageDelegate OnDamagedEvent;
+        public event OnDestroyDelegate OnDestroyedEvent;
 
         public delegate void OnReachedDestination();
 
@@ -30,17 +33,23 @@ namespace Character
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            OnDamagedEvent?.Invoke();
-            TakeDamage(1);
+            OnDamagedEvent?.Invoke(5);
+            OnDamaged(1);
 
             OnTap();
             GameManager.Instance.characterControllers.Remove(this);
+            OnDestroyedEvent?.Invoke();
             Destroy(gameObject);
         }
 
-        public void TakeDamage(int damage)
+        public void OnDestroyed()
         {
-            OnDamagedEvent?.Invoke();
+            OnDestroyedEvent?.Invoke();
+        }
+
+        public void OnDamaged(int damage)
+        {
+            OnDamagedEvent?.Invoke(damage);
             _health -= damage;
 
             if (!(_health <= 0)) return;

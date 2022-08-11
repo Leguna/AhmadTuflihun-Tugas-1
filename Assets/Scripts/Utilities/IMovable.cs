@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Character
+namespace Utilities
 {
     public interface IMovable
     {

@@ -51,11 +51,10 @@ MonoBehaviour:
   _charRigidbody: {fileID: 1003783036625712691}
   _moveSpeed: 2
   _destroyYPos: -4
-  _damage: 1
   _health: 1
   limitXMovePos: {x: -2, y: 2}
-  moveHorizontalSpeed: 100
-  moveHorizontalRepeatRate: 2
+  moveHorizontalSpeed: 1
+  moveHorizontalRepeatRate: 1
 --- !u!50 &1003783036625712691
 Rigidbody2D:
   serializedVersion: 4

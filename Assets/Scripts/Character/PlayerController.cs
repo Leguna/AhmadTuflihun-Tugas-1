@@ -6,12 +6,23 @@ namespace Character
     public class PlayerController : MonoBehaviour, IDamageable, IDoingDamage
     {
         [SerializeField] private int _health;
-        public event IDamageable.OnDamaged OnDamagedEvent;
-        public event IDamageable.OnDestroyed OnDestroyedEvent;
 
-        public void TakeDamage(int damage)
+        public delegate void OnDamageDelegate(int damage);
+
+        public delegate void OnDestroyDelegate();
+
+        public event OnDamageDelegate OnDamagedEvent;
+        public event OnDestroyDelegate OnDestroyedEvent;
+
+
+        public void OnDestroyed()
         {
-            OnDamagedEvent?.Invoke();
+            OnDestroyedEvent?.Invoke();
+        }
+
+        public void OnDamaged(int damage)
+        {
+            OnDamagedEvent?.Invoke(damage);
             _health -= damage;
             if (_health <= 0)
             {
@@ -19,6 +30,7 @@ namespace Character
                 enabled = false;
             }
         }
+
 
         public void Hit(float damage)
         {

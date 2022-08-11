@@ -2,6 +2,7 @@
 
 namespace Utilities
 {
+    // TODO @Leguna: Remove it after implement Dependency Injection on Every class
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     {
         private static T _instance;

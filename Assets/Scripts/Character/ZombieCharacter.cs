@@ -32,7 +32,7 @@ namespace Character
                 direction = -1;
 
             _charRigidbody.velocity +=
-                new Vector2(direction * moveHorizontalSpeed * Time.deltaTime, 0);
+                new Vector2(direction * moveHorizontalSpeed, 0);
         }
 
         private int GetRandomXDir => Random.Range(0, 2) * 2 - 1;
@@ -42,7 +42,9 @@ namespace Character
             base.Update();
             var xPos = transform.position.x;
             if (xPos < limitXMovePos.x || xPos > limitXMovePos.y)
+            {
                 _charRigidbody.velocity = new Vector2(0, _charRigidbody.velocity.y);
+            }
         }
 
         protected override void ReachDestination()

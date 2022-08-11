@@ -2891,8 +2891,8 @@ GameObject:
   - component: {fileID: 1303385104}
   - component: {fileID: 1303385103}
   - component: {fileID: 1303385105}
-  - component: {fileID: 1303385107}
   - component: {fileID: 1303385108}
+  - component: {fileID: 1303385107}
   - component: {fileID: 1303385106}
   m_Layer: 0
   m_Name: GameManager
@@ -3073,7 +3073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef50f99edab4cb2b46c3c0eb5d3f1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 0
+  _health: 10
 --- !u!1 &1311963479
 GameObject:
   m_ObjectHideFlags: 0
